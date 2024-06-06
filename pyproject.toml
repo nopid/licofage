@@ -1,0 +1,51 @@
+[build-system]
+requires = [
+    "setuptools",
+    "wheel",
+    "numpy",
+    "versioningit",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "licofage"
+description = "Generate deterministic finite automata associated to linear equations expressed in the numeration system associated to a given substitution."
+readme = "README.md"
+requires-python = ">=3.8"
+dynamic = ["version"]
+maintainers = [{ name = "Nicolas Ollinger", email = "nopid@free.fr" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [ "numpy" ]
+
+[project.scripts]
+licofage = "licofage.cli:main"
+
+[project.urls]
+Repository = "https://github.com/nopid/licofage.git"
+Issues = "https://github.com/nopid/licofage/issues"
+
+[tool.setuptools]
+packages = ["licofage"]
+package-dir = {"" = "src"}
+
+[tool.versioningit]
+
+[tool.versioningit.write]
+file = "src/licofage/_version.py"
+
+[tool.versioningit.vcs]
+method = "git"
+match = ["v*"]
+default-tag = "0.0"
