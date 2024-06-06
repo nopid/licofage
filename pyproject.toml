@@ -11,7 +11,7 @@ build-backend = "setuptools.build_meta"
 name = "licofage"
 description = "Generate deterministic finite automata associated to linear equations expressed in the numeration system associated to a given substitution."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dynamic = ["version"]
 maintainers = [{ name = "Nicolas Ollinger", email = "nopid@free.fr" }]
 classifiers = [
