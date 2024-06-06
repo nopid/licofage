@@ -1,3 +1,4 @@
+src/licofage/_version.py
 *.swp
 *.egg-info/
 dist/
