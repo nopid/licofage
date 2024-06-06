@@ -1,0 +1,2 @@
+[console_scripts]
+licofage = licofage.cli:main
