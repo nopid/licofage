@@ -16,11 +16,11 @@ def value(vl):
     return res
 
 
-def compcut(add, P, U, vobj, verbose):
+def compcut(add, P, U, vobj, verbose, preverb=""):
     n = P.degree()
     boundK, boundC = boundit(unfrac(P), U, vobj)
     if verbose:
-        print(f"(P,u) vector bound: {stra(boundK)} + {stra(boundC)}*C")
+        print(f"{preverb}(P,u) vector bound: {stra(boundK)} + {stra(boundC)}*C")
     reb = rebaser(P, U)
     addpo = add.maptrans(lambda a, v: (a, tuple(reb.topoly(v))))
     mi, ma = [0] * n, [0] * n
@@ -33,7 +33,7 @@ def compcut(add, P, U, vobj, verbose):
     C = max(abs(sum(mi)), abs(sum(ma)))
     cut = [b + C * a for a, b in zip(boundC, boundK)]
     if verbose:
-        print(f"Fast poly bound: C in [{stra(mi)}, {stra(ma)}] => {stra(cut)}")
+        print(f"{preverb}Fast poly bound: C in [{stra(mi)}, {stra(ma)}] => {stra(cut)}")
     return cut
 
 

@@ -8,9 +8,13 @@ ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 
 def str2sub(s):
     res = {}
-    for l in s.strip().split(","):
-        (a, u) = l.strip().split("->")
-        res[a.strip()] = u.strip()
+    if "->" in s:
+        for l in s.strip().split(","):
+            (a, u) = l.strip().split("->")
+            res[a.strip()] = u.strip()
+    else:
+        for i, u in enumerate(s.strip().split("/")):
+            res[str(i)] = u.strip()
     return res
 
 
@@ -41,6 +45,10 @@ def alpha(s):
     return sorted(list(s.keys()))
 
 
+def alphaim(s):
+    return sorted(list(set(sum(map(list, s.values()), []))))
+
+
 def seqalpha(s):
     k = 0
     for _, v in s.items():
@@ -58,13 +66,17 @@ def substpoly(s):
     return np.polynomial.Polynomial(np.poly(substmat(s))[::-1])
 
 
-def seq(s):
-    "compute the [2k] first terms of the length sequences for every letters of substitution [s]"
+def seq(s, iw=None):
+    """compute the [2k] first terms of the length sequences for every letters of substitution [s]
+    starting from initial weight values [iw]"""
     alph = alpha(s)
     A = substmat(s)
     k = 2 * len(alph)
     vv = []
-    curv = np.array([[1]] * len(alph))
+    if iw is None:
+        curv = np.array([[1]] * len(alph))
+    else:
+        curv = np.array([[i] for i in iw])
     for _ in range(k):
         vv.append(curv)
         curv = np.dot(A, curv)
@@ -85,9 +97,9 @@ def combiseq(bs, u):
     return list(sum(bs[x] for x in u))
 
 
-def addpoly(s):
+def addpoly(s, iw=None):
     "compute the minimal reccurence polynomial for addition of [s]"
-    vv = seq(s)
+    vv = seq(s, iw)
     pp = []
     for x in s:
         u = s[x]
@@ -97,13 +109,14 @@ def addpoly(s):
     return commonpoly(*pp)
 
 
-def substdfa(s, a, k=0):
-    "compute the sequence value automaton for [s] from [a] with vectors of size [k]"
+def substdfa(s, a, k=0, iw=None):
+    """compute the sequence value automaton for [s] from [a] with vectors of size [k]
+    starting with inital weight values [iw]"""
     assert (
         s[a][0] == a
     ), f'the image of "{a}" does not starts with "{a}" in the substitution'
     res = dfa()
-    vv = seq(s)
+    vv = seq(s, iw)
     for x in s:
         u = s[x]
         for i in range(len(u)):
