@@ -10,7 +10,7 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     env:
-      CIBW_SKIP: "cp313-* cp313t-*"
+      CIBW_SKIP: "pp* cp313-* cp313t-*"
     strategy:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
