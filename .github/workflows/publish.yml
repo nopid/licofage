@@ -6,8 +6,11 @@ on:
 
 jobs:
   build_wheels:
+    needs: [build_sdist]
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    env:
+      CIBW_SKIP: "cp313-* cp313t-*"
     strategy:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
