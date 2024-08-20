@@ -5,7 +5,7 @@ from fractions import Fraction
 
 def PolyFrac(*a):
     "construct fraction polynomial from integer coefficients list [a]"
-    return Poly(list(map(lambda x: Fraction(x), a)))
+    return Poly(list(map(lambda x: Fraction(x), a))).trim()
 
 
 def unfrac(P):
@@ -31,6 +31,8 @@ def bm(a):
     assert len(a) % 2 == 0, "sequence length has to be even"
     n = len(a) // 2
     R1, R0 = PolyFrac(*a[::-1]), x ** (2 * n)
+    if R1 == zero:
+        return one
     V1, V0 = one, zero
     while R1.degree() >= n:
         R0, Q, R1 = R1, *divmod(R0, R1)
