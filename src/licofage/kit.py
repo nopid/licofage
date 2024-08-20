@@ -31,11 +31,13 @@ verbose = False
 stats = False
 destdir = "/tmp/out"
 
+
 def setparams(v, s, d):
     global verbose, stats, destdir
     verbose = v
     stats = s
     destdir = P(d)
+
 
 def writefile(name, data, dir=P("Command Files")):
     genparentdir(destdir / dir / P(f"{name}.txt")).write_text(data)
@@ -177,10 +179,10 @@ class address:
         self.alpha = alphaim(self.gh) if morphic else alph
         self.P = poly_one
         iw = None
-        self.rw = { x: 1 for x in self.alpha }
+        self.rw = {x: 1 for x in self.alpha}
         if morphic:
             iw = [len(self.gh[x]) for x in alph]
-            if max(iw)>1:
+            if max(iw) > 1:
                 self.P *= poly_x
         if weights:
             rw = dict()
@@ -189,7 +191,7 @@ class address:
                 rw[x] = weights.get(x, dw)
             self.rw = rw
             if morphic:
-                iw = [ sum([rw[y] for y in self.gh[x]]) for x in alph ]
+                iw = [sum([rw[y] for y in self.gh[x]]) for x in alph]
             else:
                 iw = [rw[x] for x in alph]
         self.iw = iw
