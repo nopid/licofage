@@ -1,5 +1,4 @@
-"""A convenient lightweight library to construct and combine sequence automata.
-"""
+"""A convenient lightweight library to construct and combine sequence automata."""
 
 import numpy as np
 from .misc import poly2str, str2poly
@@ -14,6 +13,7 @@ from .subst import (
     alpha,
     alphaim,
 )
+from .subst import block as doblock
 from .polytools import (
     gen_pisot_root,
     companion,
@@ -163,6 +163,21 @@ class morphic:
 
     def morphism(self):
         return self.h
+
+
+class block:
+    def __init__(self, base, n=2):
+        self.base = base
+        self.n = n
+
+    def __repr__(self):
+        return f"block({repr(self.base)}, {self.n})"
+
+    def image(self, s):
+        return morphic(self, s)
+
+    def subst(self):
+        return doblock(*self.base.subst(), self.n)
 
 
 class address:

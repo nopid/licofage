@@ -1,4 +1,5 @@
 """Precise (but slow) operations on integer matrices"""
+
 import numpy as np
 from fractions import Fraction
 from .bareiss import adjugate

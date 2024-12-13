@@ -181,3 +181,35 @@ def dfasubst(aa):
             fs += c
         h[s] = fs
     return h
+
+
+def block(a, h, n=2):
+    "compute the n-block substitution"
+    if n > 2:
+        return block(*block(a, h, n - 1))
+    na = tuple(h[a][:2])
+    todo = [na]
+    name = {na: 0}
+    idx = 1
+    nh = dict()
+    while todo:
+        cur = todo.pop()
+        i = name[cur]
+        x = cur[0]
+        m = len(h[x])
+        s = []
+        for x in cur:
+            s.extend(list(h[x]))
+        l = ""
+        for k in range(m):
+            nxt = tuple(s[k : k + 2])
+            if nxt in name:
+                j = name[nxt]
+            else:
+                name[nxt] = idx
+                j = idx
+                idx += 1
+                todo.append(nxt)
+            l += chr(97 + j)
+        nh[chr(97 + i)] = l
+    return (chr(97 + name[na]), nh)
