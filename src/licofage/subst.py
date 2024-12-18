@@ -185,6 +185,8 @@ def dfasubst(aa):
 
 def block(a, h, n=2):
     "compute the n-block substitution"
+    if n == 1:
+        return (a, h)
     if n > 2:
         return block(*block(a, h, n - 1))
     na = tuple(h[a][:2])
